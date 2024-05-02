@@ -22,7 +22,7 @@
 
 module Top(input logic [6:0] inputMoves, input logic inputConfirm,
 inputSwitchPlayer, inputSwitchPVP, inputNewGame,
-input logic [1:0] inputChangeDebug,
+input logic inputChangeDebug,
 output logic [11:0] outputs, input logic clock, input logic reset);
 
 
