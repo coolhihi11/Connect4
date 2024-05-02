@@ -3,7 +3,12 @@ project:
   source_files:
     - toplevel_chip.v
     - chip.sv
-    - decoder.v
+    - Board.sv
+    - library.sv
+    -Ownership.sv
+    -PvE.sv
+    -Token.sv
+    -Top.sv
   top_module:  "toplevel_chip"
 
 # As everyone will have access to all designs, try to make it easy for someone new to your design to know what
@@ -13,33 +18,34 @@ project:
 #
 # This info will be automatically collected and used to make a datasheet for the chip.
 documentation: 
-  author:       "PLACEHOLDER"      # Your name
-  discord:      ""      # Your discord handle
-  title:        "PLACEHOLDER"      # Project title
-  description:  "PLACEHOLDER"      # Short description of what your project does
+  author:       "John Alacce"      # Your name
+  discord:      "@coolhihi11"      # Your discord handle
+  title:        "Connect 4"      # Project title
+  description:  "Plays the game Connect 4 and outputs to VGA with PVP and PVE modes"     # Short description of what your project does
   how_it_works: "PLACEHOLDER"      # Longer description of how the project works
   how_to_test:  "PLACEHOLDER"      # Instructions on how someone could test your project, include things like what buttons do what and how to set the clock if needed
-  external_hw:  "PLACEHOLDER"      # Describe any external hardware needed
+  external_hw:  "A VGA display"      # Describe any external hardware needed
   language:     "verilog" # other examples include Verilog, Amaranth, VHDL, etc
   doc_link:     ""      # URL to longer form documentation, eg the README.md in your repository
-  clock_hz:     1000       # Clock frequency in Hz (if required)
+  clock_hz:     25000000       # Clock frequency in Hz (if required)
   picture:      ""      # relative path to a picture in your repository
   inputs:               # a description of what the inputs do
-    - none
-    - none
-    - none
-    - none
-    - none
-    - none
-    - none
-    - none
+    - Player move input 0-6
+    - Player Move confirm
+    - Switches between Player 1 and Player 2
+    - Switches between PVP and PVE
+    - Starts a new game
+    - Changes what is output on debug outputs
   outputs:
-    - none
-    - none
-    - none
-    - none
-    - none
-    - none
-    - none
-    - none
+    - VGA VSync
+    - VGA HSync
+    - VGA Blank
+    - VGA Red
+    - VGA Red
+    - VGA Green
+    - VGA Green
+    - VGA Blue
+    - VGA Blue
+    - Debug Outputs
+    - Debug Outputs
 
