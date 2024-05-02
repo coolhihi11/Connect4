@@ -1311,7 +1311,7 @@ module Counter (
 		end
 endmodule
 `default_nettype none
-module Top (
+module TopChip (
 	inputMoves,
 	inputConfirm,
 	inputSwitchPlayer,
