@@ -7,7 +7,7 @@ module my_chip (
     input logic reset // Important: Reset is ACTIVE-HIGH
 );
     
-    Top design (.clock(clock), .reset(reset), .inputMoves(io_in[6:0]), .inputConfirm(io_in[7]),
+    TopChip design (.clock(clock), .reset(reset), .inputMoves(io_in[6:0]), .inputConfirm(io_in[7]),
                 .inputSwitchPlayer(io_in[8]), .inputSwitchPVP(io_in[9]), .inputNewGame(io_in[10]),
                 .inputChangeDebug(io_in[11]),
                 .outputs(io_out));
