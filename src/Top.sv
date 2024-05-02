@@ -57,8 +57,8 @@ output logic [11:0] outputs, input logic clock, input logic reset);
   logic debounceCountEn,debounceClear;
   logic [22:0] debounceCount;
 
-  //For COCO TB testing
-  //logic [22:0] debounceLimit = 23'd0;
+  // //For COCO TB testing
+  // logic [22:0] debounceLimit = 23'd0;
   //For FPGA and CHIP
   logic [22:0] debounceLimit = 23'd6_250_000;
   //comment out these assigns for cocoTB

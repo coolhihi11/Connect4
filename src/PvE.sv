@@ -42,44 +42,6 @@ input logic bot_turn, output logic [6:0] bot_move, output logic bot_confirm);
   PvEFSM fsm(.clock(clock), .reset(reset), .wantToMove(wantToMove),
   .bot_move(bot_move), .bot_confirm(bot_confirm), .bot_turn(bot_turn));
 
-  // //FSM that makes sure that the confirm input is only high for 1 clock
-  // enum logic [1:0] {PRESSED,PRESSEDLOCKED,NOTPRESSED} currStateConfirm, nextStateConfirm;
-  // always_ff @(posedge clock) begin
-  //   if(reset)
-  //     currStateConfirm <= NOTPRESSED;
-  //   else begin
-  //     currStateConfirm <= nextStateConfirm;
-  //   end
-  // end
-  // always_comb begin
-  //   bot_confirm = 0;
-  //   case(currStateConfirm)
-  //     PRESSED: begin
-  //       bot_confirm = 1;
-  //       nextStateConfirm = PRESSEDLOCKED;
-  //     end
-  //     NOTPRESSED: begin
-  //       bot_confirm = 0;
-  //       if(bot_confirm_FSM)
-  //         nextStateConfirm = PRESSED;
-  //       else
-  //         nextStateConfirm = NOTPRESSED;
-  //     end
-  //     PRESSEDLOCKED: begin
-  //       bot_confirm = 0;
-  //       if(~bot_confirm_FSM)
-  //         nextStateConfirm = NOTPRESSED;
-  //       else
-  //         nextStateConfirm = PRESSEDLOCKED;
-  //     end
-  //     default: begin
-  //       bot_confirm = 0;
-  //       nextStateConfirm = NOTPRESSED;
-  //     end
-  //   endcase
-  // end
-
-
 
 endmodule: PvE
 
@@ -89,13 +51,27 @@ output logic [6:0] bot_move, output logic bot_confirm);
 
   logic [6:0] selectedMove;
 
+  logic [22:0] timeOut;
+  logic timeOutEn, timeOutClear;
+  //Below is for FPGA and Chip
+  logic [22:0] timeOutDelay = 23'd6_250_000;
+  //below is for cocoTB
+  // logic [22:0] timeOutDelay = 23'd0;
+
   enum logic [4:0] {START,MOVE,MOVED} currState, nextState;
 
   always_ff @(posedge clock) begin
-    if(reset)
+    if(reset) begin
       currState <= START;
-    else
+      timeOut <= 23'd0;
+    end
+    else begin
       currState <= nextState;
+      if(timeOutClear)
+        timeOut <= 23'd0;
+      else if(timeOutEn)
+        timeOut <= timeOut + 23'd1;
+    end
   end
 
   always_comb begin
@@ -121,10 +97,14 @@ output logic [6:0] bot_move, output logic bot_confirm);
   always_comb begin
     bot_move = 7'd0;
     bot_confirm = 0;
+    timeOutClear = 1;
+    timeOutEn = 0;
     unique case(currState)
       START: begin
         bot_confirm = 0;
         bot_move = 7'd9;
+        timeOutClear = 1;
+        timeOutEn = 0;
         if(~bot_turn)
           nextState = START;
         else begin
@@ -137,15 +117,19 @@ output logic [6:0] bot_move, output logic bot_confirm);
       MOVE: begin
         bot_move[selectedMove] = 1;
         bot_confirm = 1;
+        timeOutClear = 1;
+        timeOutEn = 0;
         nextState = MOVED;
       end
       MOVED: begin
         bot_move = 7'd9;
         bot_confirm = 0;
-        if(bot_turn)
-          nextState = MOVED;
-        else
+        timeOutEn = 1;
+        timeOutClear = 0;
+        if(~bot_turn && (timeOut >= timeOutDelay))
           nextState = START;
+        else
+          nextState = MOVED;
       end
       default: begin
         bot_move = 7'd9;
