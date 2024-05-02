@@ -5,10 +5,10 @@ project:
     - chip.sv
     - Board.sv
     - library.sv
-    -Ownership.sv
-    -PvE.sv
-    -Token.sv
-    -Top.sv
+    - Ownership.sv
+    - PvE.sv
+    - Token.sv
+    - Top.sv
   top_module:  "toplevel_chip"
 
 # As everyone will have access to all designs, try to make it easy for someone new to your design to know what
