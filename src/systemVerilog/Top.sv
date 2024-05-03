@@ -172,7 +172,8 @@ output logic [11:0] outputs, input logic clock, input logic reset);
   Ownership owner(.player_1_input(inputMovesSync), 
   .player_1_confirm(inputConfirmLimited),
    .player_2_input(player_2_input), .player_2_confirm(player_2_confirm),
-  .switchTurn(inputSwitchPlayerSync), .clock(clock), .reset(reset), .tokens(tokens));
+  .switchTurn(inputSwitchPlayerSync), .clock(clock), .reset(reset), .tokens(tokens),
+  .newGame(inputNewGameSync));
   //Tested
   PvE pve(.clock(clock), .reset(reset), .tokens(tokens), 
   .bot_turn(inputSwitchPlayerSync),

@@ -332,13 +332,24 @@ module PvEFSM (
 	output reg [6:0] bot_move;
 	output reg bot_confirm;
 	reg [6:0] selectedMove;
+	reg [22:0] timeOut;
+	reg timeOutEn;
+	reg timeOutClear;
+	reg [22:0] timeOutDelay = 23'd6250000;
 	reg [4:0] currState;
 	reg [4:0] nextState;
 	always @(posedge clock)
-		if (reset)
+		if (reset) begin
 			currState <= 5'd0;
-		else
+			timeOut <= 23'd0;
+		end
+		else begin
 			currState <= nextState;
+			if (timeOutClear)
+				timeOut <= 23'd0;
+			else if (timeOutEn)
+				timeOut <= timeOut + 23'd1;
+		end
 	always @(*)
 		if (wantToMove[3])
 			selectedMove = 7'd3;
@@ -359,10 +370,14 @@ module PvEFSM (
 	always @(*) begin
 		bot_move = 7'd0;
 		bot_confirm = 0;
+		timeOutClear = 1;
+		timeOutEn = 0;
 		case (currState)
 			5'd0: begin
 				bot_confirm = 0;
 				bot_move = 7'd9;
+				timeOutClear = 1;
+				timeOutEn = 0;
 				if (~bot_turn)
 					nextState = 5'd0;
 				else if (selectedMove < 7'd7)
@@ -373,15 +388,19 @@ module PvEFSM (
 			5'd1: begin
 				bot_move[selectedMove] = 1;
 				bot_confirm = 1;
+				timeOutClear = 1;
+				timeOutEn = 0;
 				nextState = 5'd2;
 			end
 			5'd2: begin
 				bot_move = 7'd9;
 				bot_confirm = 0;
-				if (bot_turn)
-					nextState = 5'd2;
-				else
+				timeOutEn = 1;
+				timeOutClear = 0;
+				if (~bot_turn && (timeOut >= timeOutDelay))
 					nextState = 5'd0;
+				else
+					nextState = 5'd2;
 			end
 			default: begin
 				bot_move = 7'd9;

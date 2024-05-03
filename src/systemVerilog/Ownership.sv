@@ -4,7 +4,7 @@ module Ownership
 (input logic [6:0] player_1_input, player_2_input,
 input logic player_1_confirm, player_2_confirm,
 input logic switchTurn, input logic clock, input logic reset,
-output logic [1:0] tokens [6][7]);
+output logic [1:0] tokens [6][7], input logic newGame);
 
   //tokens array works side by side bits are considered sigle token
   //each set of 14 is a single row
@@ -25,6 +25,8 @@ output logic [1:0] tokens [6][7]);
 
   always_ff @(posedge clock) begin
     if(reset)
+      tokens <= 84'd0;
+    else if(newGame)
       tokens <= 84'd0;
     else begin
       if(~confirm)
