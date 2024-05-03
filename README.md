@@ -14,23 +14,23 @@ The VGA module was taken from https://github.com/asinghani/ulx3s-vga-example
 The Board module takes in the current row and column and determines if that pixel should be a board pixel.
 ![](board1.png)
 ![](board2.png)
-![](board3.png)
+![](board3.PNG)
 
 The Token module takes in the current row and column and determines if that pixel should be a token pixel. This module also tells the color module which token the current row/col corresponds to.
 Shown here is a sample of how 7 of the tokens work with the full documenation in the Design directory.
-![](token1.png)
-![](token2.png)
-![](token3.png)
+![](token1.PNG)
+![](token2.PNG)
+![](token3.PNG)
 
 The Ownership module takes in the players input along with which player it is. It then finds the lowest valid row for the token to be changes and changes the value in the packed/unpacked array to be of the current player.
-![](Ownership.png)
+![](Ownership.PNG)
 
 The PVE module uses LSFR modules to randomly create possible moves and then the innermost move out of the possible moves is taken.
-![](PVE1.png)
-![](PVE2.png)
+![](PVE1.PNG)
+![](PVE2.PNG)
 
 The Colors module determines what RGB value the current pixel as determined by the row/col should be using information from the Board module, Token module and the Ownership module.
-![](Colors.png)
+![](Colors.PNG)
 
 ## Inputs/Outputs
 Input Pins
@@ -69,11 +69,11 @@ All unselected tokens should be black. The PVE player should choose one token ev
 
 Here is a video of PVE mode.
 
-![](pve.mp4)
+![](pve.MP4)
 
 Here is a video of PVP mode.
 
-![](pvp.mp4)
+![](pvp.MP4)
 
 ## FPGA use
 
