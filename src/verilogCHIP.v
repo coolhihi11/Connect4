@@ -127,7 +127,8 @@ module Ownership (
 	switchTurn,
 	clock,
 	reset,
-	tokens
+	tokens,
+	newGame
 );
 	input wire [6:0] player_1_input;
 	input wire [6:0] player_2_input;
@@ -137,6 +138,7 @@ module Ownership (
 	input wire clock;
 	input wire reset;
 	output reg [83:0] tokens;
+	input wire newGame;
 	reg [6:0] move;
 	reg confirm;
 	wire [1:0] set;
@@ -151,6 +153,8 @@ module Ownership (
 	assign set = (~currentPlayer & confirm ? 2'b01 : (currentPlayer & confirm ? 2'b10 : 2'b00));
 	always @(posedge clock)
 		if (reset)
+			tokens <= 84'd0;
+		else if (newGame)
 			tokens <= 84'd0;
 		else if (~confirm)
 			tokens <= tokens;
@@ -1503,7 +1507,8 @@ module TopChip (
 		.switchTurn(inputSwitchPlayerSync),
 		.clock(clock),
 		.reset(reset),
-		.tokens(tokens)
+		.tokens(tokens),
+		.newGame(inputNewGameSync)
 	);
 	PvE pve(
 		.clock(clock),
