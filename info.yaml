@@ -35,6 +35,7 @@ documentation:
     - VGA VSync
     - VGA HSync
     - VGA Blank
+    - VGA Clock
     - VGA Red
     - VGA Red
     - VGA Green
