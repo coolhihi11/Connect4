@@ -67,13 +67,11 @@ All unselected tokens should be black. The PVE player should choose one token ev
 
 ## Media
 
-Here is a video of PVE mode.
+A video of PVE mode is in pve.mp4
 
-![](pve.MP4)
+A video of PVP mode is in pvp.mp4
 
-Here is a video of PVP mode.
-
-![](pvp.MP4)
+The files are to large(~25MB) for github to embed.
 
 ## FPGA use
 
