@@ -30,7 +30,6 @@ documentation:
     - Switches between Player 1 and Player 2
     - Switches between PVP and PVE
     - Starts a new game
-    - Changes what is output on debug outputs
   outputs:
     - VGA VSync
     - VGA HSync
@@ -42,6 +41,4 @@ documentation:
     - VGA Green
     - VGA Blue
     - VGA Blue
-    - Debug Outputs
-    - Debug Outputs
 
